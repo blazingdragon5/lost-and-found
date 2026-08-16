@@ -1,0 +1,55 @@
+{#
+  report.html — the "report an item" form. WEEK 2.
+
+  One clever thing: this single template handles BOTH the lost form and the
+  found form. main.py passes in kind="lost" or kind="found", and the
+  {% if %} bits below change the wording. One file instead of two.
+
+  ⚠️ THE #1 FORM TRAP: every input needs a name="" attribute, and that name
+  must EXACTLY match the argument name in your main.py function. If main.py
+  says `title: str = Form(...)`, the input must be name="title". Not
+  name="item_title". Not name="Title". Exactly "title".
+
+  When a form mysteriously sends nothing, this is almost always why.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>
+  {% if kind == "lost" %}Report something you lost{% else %}Report something you found{% endif %}
+</h1>
+<p class="sub">The more you describe it, the better the matches.</p>
+
+{#
+  TODO (Week 2): build the form.
+
+  Start it like this:
+      <form method="post" action="/report/{{ kind }}">
+
+  method="post" matters. Leave it off and the browser does a GET, your
+  @app.post route never runs, and nothing saves. Silent failure — annoying.
+
+  Fields you need (check each name against main.py):
+      title             text
+      description       textarea
+      category          select
+      color             select
+      location          select
+      date_happened     date
+      reporter_name     text
+      reporter_contact  text
+
+  Then a submit button:
+      <button type="submit" class="btn wide">Submit</button>
+
+  Look at the mockup HTML if you want to copy the layout — the classes
+  like "card" and "grid2" are already styled for you in style.css.
+#}
+
+<div class="empty">
+  <p><strong>You haven't built this form yet.</strong></p>
+  <p>That's Week 2. Open this file and follow the TODO.</p>
+</div>
+
+{% endblock %}

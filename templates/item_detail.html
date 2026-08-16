@@ -1,0 +1,78 @@
+{#
+  item_detail.html — one item, plus its matches. ⭐ YOUR BEST SCREEN ⭐
+
+  Week 3: just show the item.
+  Week 5: add the match cards underneath.
+
+  Don't try to do both at once. Get the top half working first.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+
+{#
+  TODO (Week 3): show the item itself.
+
+      <div class="detail">
+        <div>
+          <div class="photo-lg">📦</div>
+        </div>
+        <div>
+          <span class="pill {{ item.status }}">{{ item.status }}</span>
+          <h1>{{ item.title }}</h1>
+          <p class="sub">{{ item.description }}</p>
+          <div class="dl">
+            <div><span>Category</span><span>{{ item.category }}</span></div>
+            ... more rows ...
+          </div>
+        </div>
+      </div>
+#}
+
+{#
+  TODO (Week 5): the match cards. This is the screen from your mockup.
+
+    {% for m in matches %}
+      <div class="match {% if m.score >= 80 %}top{% endif %}">
+        <div class="ring {% if m.score >= 80 %}high{% elif m.score >= 50 %}mid{% endif %}">
+          <span class="pct">{{ m.score }}%</span>
+          <span class="cap">MATCH</span>
+        </div>
+        <div class="match-body">
+          <h4>{{ m.item.title }}</h4>
+          <div class="where">{{ m.item.location }} · {{ m.item.date_happened }}</div>
+          <ul class="reasons">
+            {% for r in m.reasons %}
+              <li>
+                <span class="{% if r.good %}tick{% else %}cross{% endif %}">
+                  {% if r.good %}✓{% else %}✗{% endif %}
+                </span>
+                <span>{{ r.text }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="match-act">
+          <form method="post" action="/item/{{ item.id }}/claim">
+            <input type="hidden" name="matched_with" value="{{ m.item.id }}">
+            <button class="mini yes">That's mine!</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+
+  I've written most of that out because the nested loop (matches, and then
+  reasons inside each match) is genuinely tricky the first time. Type it in
+  yourself rather than pasting — you'll actually remember how it works, and
+  you'll need to explain it in your video.
+
+  ⚠️ Don't forget the {% else %} case: what shows when there are NO matches?
+  A blank screen looks broken. Say something friendly like "Nothing matches
+  yet — we'll keep looking as new items come in."
+#}
+
+<div class="empty">
+  <p><strong>Not built yet.</strong> Item details are Week 3, matches are Week 5.</p>
+</div>
+
+{% endblock %}

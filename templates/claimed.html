@@ -1,0 +1,33 @@
+{#
+  claimed.html — the happy ending. WEEK 5.
+
+  Someone found their stuff. Make this screen feel good — it's the payoff
+  for everything else, and it's a great last shot in your demo video.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="text-align:center; padding:50px 20px; max-width:520px; margin:0 auto">
+
+  <div class="big-check">✓</div>
+  <h1>Nice — that's a match!</h1>
+
+  {#
+    TODO (Week 5): show where to pick it up and who found it.
+
+    A nice touch: generate a short pickup code like LF-4471 so the front
+    office can confirm the right person is collecting it. You can make one
+    from the item id — something like "LF-" + str(item.id).zfill(4).
+
+    Small feature, 3 lines of code, and it makes your app feel like a real
+    thing a school would actually use. Judges notice details like that.
+  #}
+
+  <p class="sub">Details go here — Week 5.</p>
+
+  <a href="/" class="btn wide" style="margin-top:24px">Back to home</a>
+
+</div>
+
+{% endblock %}

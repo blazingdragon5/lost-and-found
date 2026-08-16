@@ -1,0 +1,259 @@
+/* ==========================================================================
+   style.css — this one's a gift. It's already done.
+
+   Aditya: you're not being judged on CSS, and staring at ugly gray text for
+   ten weeks is no fun. So this is written for you and it makes your app look
+   like the mockup.
+
+   WANT TO CHANGE THE COLORS? Everything is in the block right below. Change
+   --primary to a different color code, save, refresh your browser. That's it.
+   The whole site updates. Try it right now — it's a satisfying two seconds.
+
+   Grab color codes from htmlcolorcodes.com if you want to experiment.
+   ========================================================================== */
+
+:root {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+
+  --primary: #2563eb;          /* main blue — change this one first */
+  --primary-text: #ffffff;
+  --primary-soft: #dbeafe;
+
+  --accent: #d97706;
+  --accent-soft: #fef3c7;
+  --good: #059669;
+  --good-soft: #d1fae5;
+  --warn: #dc2626;
+  --warn-soft: #fee2e2;
+
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+/* ---------- nav ---------- */
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+nav .wrap { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.brand {
+  font-weight: 800; font-size: 17px; color: var(--primary);
+  padding: 16px 18px 16px 0; text-decoration: none; letter-spacing: -0.3px;
+}
+nav a {
+  padding: 16px 13px; font-size: 14px; color: var(--muted);
+  text-decoration: none; font-weight: 600;
+  border-bottom: 3px solid transparent;
+}
+nav a:hover { color: var(--text); }
+nav a.on { color: var(--primary); border-bottom-color: var(--primary); }
+
+main { padding: 28px 0 60px; }
+
+h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+h2 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.sub { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+
+/* ---------- hero ---------- */
+.hero {
+  background: var(--primary); color: var(--primary-text);
+  border-radius: var(--radius); padding: 34px; margin-bottom: 24px;
+}
+.hero h1 { font-size: 30px; margin-bottom: 8px; }
+.hero p { opacity: 0.92; font-size: 15px; max-width: 520px; }
+.hero-btns { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+.hero .btn { background: var(--primary-text); color: var(--primary); }
+.hero .btn.ghost {
+  background: transparent; color: var(--primary-text);
+  border: 2px solid var(--primary-text);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block; background: var(--primary); color: var(--primary-text);
+  border: 0; padding: 12px 22px; border-radius: 10px; font-size: 14px;
+  font-weight: 700; cursor: pointer; text-decoration: none;
+  font-family: inherit;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn.wide { width: 100%; text-align: center; padding: 16px; }
+.btn.big { padding: 18px 26px; font-size: 15px; }
+
+/* ---------- cards & layout ---------- */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 760px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+/* ---------- forms ---------- */
+label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+input, select, textarea {
+  width: 100%; padding: 11px 13px; border: 1px solid var(--border);
+  border-radius: 10px; font-size: 14px; font-family: inherit;
+  background: var(--surface); color: var(--text); margin-bottom: 16px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--primary); border-color: transparent;
+}
+textarea { min-height: 88px; resize: vertical; }
+.field-tip { font-size: 12px; color: var(--muted); margin: -12px 0 16px; }
+
+/* ---------- status pills ---------- */
+.pill {
+  display: inline-block; padding: 4px 11px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase;
+}
+.pill.lost { background: var(--warn-soft); color: var(--warn); }
+.pill.found { background: var(--good-soft); color: var(--good); }
+.pill.claimed { background: var(--primary-soft); color: var(--primary); }
+
+/* ---------- stat tiles ---------- */
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.stat .n { font-size: 32px; font-weight: 800; letter-spacing: -1px; color: var(--primary); }
+.stat .l { font-size: 13px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+
+/* ---------- item cards ---------- */
+.items {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 16px;
+}
+.item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; text-decoration: none;
+  color: inherit; transition: 0.15s; display: block;
+}
+.item:hover {
+  transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  border-color: var(--primary);
+}
+.thumb {
+  height: 130px; background: var(--surface-2); display: flex;
+  align-items: center; justify-content: center; font-size: 44px;
+  border-bottom: 1px solid var(--border);
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.item-body { padding: 14px; }
+.item-body h4 { font-size: 15px; font-weight: 700; margin: 8px 0 4px; }
+.item-body .meta { font-size: 12px; color: var(--muted); }
+
+/* ---------- filters ---------- */
+.filters {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px; margin-bottom: 20px;
+  display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; align-items: end;
+}
+.filters input, .filters select { margin-bottom: 0; }
+@media (max-width: 760px) { .filters { grid-template-columns: 1fr; } }
+
+/* ---------- MATCH CARDS (your best screen) ---------- */
+.match {
+  background: var(--surface); border: 2px solid var(--border);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
+  display: flex; gap: 18px; align-items: flex-start;
+}
+.match.top { border-color: var(--good); background: var(--good-soft); }
+.ring {
+  flex-shrink: 0; width: 74px; height: 74px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; color: #fff; font-weight: 800;
+  background: var(--muted);
+}
+.ring.high { background: var(--good); }
+.ring.mid { background: var(--accent); }
+.ring .pct { font-size: 22px; line-height: 1; }
+.ring .cap { font-size: 9px; letter-spacing: 0.6px; opacity: 0.9; }
+.match-body { flex: 1; }
+.match-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.match-body .where { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.reasons { list-style: none; font-size: 13px; }
+.reasons li { padding: 3px 0; display: flex; gap: 8px; align-items: flex-start; }
+.tick { color: var(--good); font-weight: 800; }
+.cross { color: var(--muted); font-weight: 800; }
+.hl {
+  background: var(--accent-soft); color: var(--accent);
+  padding: 1px 6px; border-radius: 5px; font-weight: 700;
+}
+.match-act { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+.mini {
+  padding: 9px 15px; font-size: 13px; border-radius: 8px; font-weight: 700;
+  cursor: pointer; font-family: inherit; border: 0; white-space: nowrap;
+}
+.mini.yes { background: var(--good); color: #fff; }
+.mini.no { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+/* ---------- detail page ---------- */
+.detail { display: grid; grid-template-columns: 300px 1fr; gap: 26px; }
+@media (max-width: 760px) { .detail { grid-template-columns: 1fr; } }
+.photo-lg {
+  height: 250px; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius); display: flex; align-items: center;
+  justify-content: center; font-size: 80px; margin-bottom: 14px; overflow: hidden;
+}
+.photo-lg img { width: 100%; height: 100%; object-fit: cover; }
+.dl { font-size: 14px; }
+.dl div {
+  display: flex; justify-content: space-between; padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.dl span:first-child { color: var(--muted); font-weight: 600; }
+.dl span:last-child { font-weight: 600; text-align: right; }
+
+/* ---------- upload ---------- */
+.drop {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 34px; text-align: center; color: var(--muted);
+  margin-bottom: 16px; background: var(--surface-2);
+}
+
+/* ---------- stats bars ---------- */
+.bars { display: flex; flex-direction: column; gap: 12px; }
+.bar-row {
+  display: grid; grid-template-columns: 92px 1fr 44px; gap: 12px;
+  align-items: center; font-size: 13px;
+}
+.track { background: var(--surface-2); border-radius: 999px; height: 22px; overflow: hidden; }
+.fill { height: 100%; border-radius: 999px; background: var(--primary); }
+.bar-row .v { font-weight: 700; text-align: right; }
+
+/* ---------- misc ---------- */
+.note {
+  background: var(--primary-soft); border-radius: 10px; padding: 14px 18px;
+  font-size: 13px; margin-top: 22px;
+}
+.callout {
+  background: var(--accent-soft); border-left: 4px solid var(--accent);
+  padding: 14px 18px; border-radius: 10px; margin-bottom: 22px; font-size: 14px;
+}
+.empty {
+  text-align: center; padding: 50px 20px; color: var(--muted);
+  background: var(--surface); border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+.big-check {
+  width: 88px; height: 88px; border-radius: 50%; background: var(--good);
+  color: #fff; font-size: 46px; display: flex; align-items: center;
+  justify-content: center; margin: 0 auto 22px;
+}

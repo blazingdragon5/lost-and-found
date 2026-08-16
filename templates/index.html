@@ -1,0 +1,71 @@
+{#
+  index.html — your home page. This one WORKS. It's your Week 0 finish line.
+
+  Read how it fits together:
+    - "extends base.html" means wrap me in the nav bar and the styling
+    - the {% block content %} part gets dropped into the hole in base.html
+    - {{ stats.reported }} prints a value that main.py handed over
+
+  Once your server is running, go to http://127.0.0.1:8000 and you should
+  see this page. The numbers will all be 0 because your database is empty.
+  That's right, not broken.
+#}
+{% extends "base.html" %}
+
+{% block title %}Lost &amp; Found — Home{% endblock %}
+
+{% block content %}
+
+<div class="hero">
+  <h1>Lost something at school?</h1>
+  <p>Tell us what it was. We'll check everything that's been turned in and
+     show you what might be yours.</p>
+  <div class="hero-btns">
+    <a href="/report/lost" class="btn big">I lost something</a>
+    <a href="/report/found" class="btn big ghost">I found something</a>
+  </div>
+</div>
+
+<div class="grid3" style="margin-bottom:26px">
+  <div class="stat">
+    <div class="n">{{ stats.reported }}</div>
+    <div class="l">Items reported</div>
+  </div>
+  <div class="stat">
+    <div class="n">{{ stats.returned }}</div>
+    <div class="l">Back with their owner</div>
+  </div>
+  <div class="stat">
+    <div class="n">{{ stats.waiting }}</div>
+    <div class="l">Waiting to be claimed</div>
+  </div>
+</div>
+
+<h2>Just turned in</h2>
+
+{#
+  This loop draws one card per item. Right now "recent" is an empty list,
+  so the {% else %} part runs instead. Once your database works, cards
+  will appear here automatically — you won't touch this file again.
+#}
+{% if recent %}
+  <div class="items">
+    {% for item in recent %}
+      <a href="/item/{{ item.id }}" class="item">
+        <div class="thumb">📦</div>
+        <div class="item-body">
+          <span class="pill {{ item.status }}">{{ item.status }}</span>
+          <h4>{{ item.title }}</h4>
+          <div class="meta">{{ item.location }} · {{ item.date_happened }}</div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="empty">
+    <p><strong>Nothing here yet.</strong></p>
+    <p>Once you build the report form in Week 2, items will show up here.</p>
+  </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{#
+  browse.html — see everything, search and filter it. WEEK 3.
+#}
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Everything in lost &amp; found</h1>
+<p class="sub">{{ items|length }} items right now.</p>
+
+{#
+  TODO (Week 3a): build the filter bar.
+
+  This form uses method="get", NOT post. Why? Because a search should be
+  shareable — you want /browse?q=blue in the address bar so you can send
+  the link to a friend. POST hides the values. GET puts them in the URL.
+  That's the actual difference and it's worth understanding.
+
+      <form method="get" action="/browse" class="filters">
+        <div><label>Search</label><input name="q" value="{{ q }}"></div>
+        ... status and category selects ...
+        <button class="btn">Search</button>
+      </form>
+
+  ⚠️ Notice value="{{ q }}" — that puts what they typed back in the box after
+  the search runs. Skip it and the box goes blank every time, which feels
+  broken to whoever's using it.
+#}
+
+{#
+  TODO (Week 3b): loop over items and draw a card for each one.
+  You already wrote this exact loop in index.html. Go copy it.
+  Reusing your own code is not cheating, it's the whole point.
+#}
+
+<div class="empty">
+  <p><strong>Not built yet.</strong> That's Week 3.</p>
+</div>
+
+{% endblock %}
