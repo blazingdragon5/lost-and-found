@@ -45,6 +45,9 @@ reads as confidence. A vague one reads as hiding something.
 - Claude wrote the working parts of `main.py` (the home page route) and
   `database.py` (`create_tables`) as examples for me to learn the pattern from.
 
+  AI helped me troubleshoot Python/Pillow compatibility with Python 3.14, understand Git setup errors, and understand how to connect VS Code with GitHub.
+  AI explained the setup steps and Git commands when I got stuck; I completed the setup and wrote the project code myself.
+
 ### Week 1 — Aug 24–30 — Database
 
 - TODO: write what happened
