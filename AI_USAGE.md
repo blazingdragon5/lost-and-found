@@ -50,7 +50,10 @@ reads as confidence. A vague one reads as hiding something.
 
 ### Week 1 — Aug 24–30 — Database
 
-- TODO: write what happened
+Understand how SQL INSERT, SELECT, and DELETE commands work.
+Understand SQL ? placeholders and why parameterized queries are safer.
+Understand how fetchone() and fetchall() return database rows.
+Learn how to test each database function.
 
 ### Week 2 — Aug 31–Sep 6 — Forms
 

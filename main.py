@@ -49,11 +49,8 @@ def startup():
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    """The home page."""
-    # Later you'll swap these fake numbers for real ones from your database.
     stats = {"reported": 0, "returned": 0, "waiting": 0}
-    recent = []
-
+    recent = database.get_all_items()[:4]
     return templates.TemplateResponse(
         "index.html",
         {"request": request, "stats": stats, "recent": recent},
@@ -65,18 +62,18 @@ def home(request: Request):
 # ==========================================================================
 
 @app.get("/report/lost", response_class=HTMLResponse)
+#This code displays the form for the user
 def report_lost_form(request: Request):
-    """Show the 'I lost something' form.
-
-    TODO (Week 2):
-      Return templates.TemplateResponse("report.html", {...}).
-      Pass "kind": "lost" in the dictionary so the template knows which
-      version of the form to draw. One template, two uses — less work for you.
-    """
-    pass  # TODO: you write this
+    return templates.TemplateResponse(
+    "report.html",
+    {"request": request, "kind": "lost"},
+)
+#This code opens the report_lost_item form 
+    
 
 
 @app.post("/report/lost")
+#This posts the data from the form app 
 def submit_lost(
     title: str = Form(...),
     description: str = Form(...),
@@ -86,36 +83,40 @@ def submit_lost(
     date_happened: str = Form(...),
     reporter_name: str = Form(...),
     reporter_contact: str = Form(...),
+    #This takes the data from the form and saves it in these variables
 ):
-    """Save a lost item, then send the person to their match results.
-
-    Notice this is @app.post, not @app.get. GET means "show me a page."
-    POST means "here's some data, save it." Forms use POST.
-
-    TODO (Week 2):
-      1. Build a dictionary from all those Form values above.
-      2. Add "status": "lost" to it.
-      3. new_id = database.add_item(that_dictionary)
-      4. return RedirectResponse(f"/item/{new_id}", status_code=303)
-
-    ⚠️ TRAP: you must use status_code=303 on that redirect. Without it the
-    browser tries to POST again and you get a confusing error. This one
-    wastes people a lot of time.
-    """
-    pass  # TODO: you write this
+    item = {
+    "status": "lost",
+    "title": title,
+    "description": description,
+    "category": category,
+    "color": color,
+    "location": location,
+    "date_happened": date_happened,
+    "reporter_name": reporter_name,
+    "reporter_contact": reporter_contact,
+    "photo_filename": None,
+    }
+    new_id = database.add_item(item)
+    return RedirectResponse(f"/item/{new_id}", status_code=303)
+#This function takes the data from the form and saves it in a new dictionary called item.
+#Then it sends the item to the database and gets back the id.
 
 
 @app.get("/report/found", response_class=HTMLResponse)
+#This code displays the form for the user
 def report_found_form(request: Request):
-    """Show the 'I found something' form.
-
-    TODO (Week 2): same as report_lost_form, but pass "kind": "found".
-    """
-    pass  # TODO: you write this
+    return templates.TemplateResponse(
+        "report.html",
+        {"request":request, "kind": "found"}
+    )
+#This code opens the report_found_form
 
 
 @app.post("/report/found")
+#This posts the data from the form
 def submit_found(
+
     title: str = Form(...),
     description: str = Form(...),
     category: str = Form(...),
@@ -124,14 +125,26 @@ def submit_found(
     date_happened: str = Form(...),
     reporter_name: str = Form(...),
     reporter_contact: str = Form(...),
+    #This saves the data from the submit_found form in variables
 ):
-    """Save a found item.
-
-    TODO (Week 2): same idea as submit_lost, but "status": "found".
-    TODO (Week 6): add photo upload. Come back to this later — don't try
-    to do photos and forms at the same time.
-    """
-    pass  # TODO: you write this
+     item = {
+        "status": "found",
+        "title": title,
+        "description": description,
+        "category": category,
+        "color": color,
+        "location": location,
+        "date_happened": date_happened,
+        "reporter_name": reporter_name,
+        "reporter_contact": reporter_contact,
+        "photo_filename": None,
+        }
+     new_id = database.add_item(item)
+     return RedirectResponse(f"/item/{new_id}", status_code=303)
+   
+   # TODO (Week 6): add photo upload. Come back to this later — don't try
+    #to do photos and forms at the same time.
+#This function takes the data from the found form and enters it into the database.
 
 
 # ==========================================================================

@@ -48,8 +48,36 @@
 #}
 
 <div class="empty">
-  <p><strong>You haven't built this form yet.</strong></p>
-  <p>That's Week 2. Open this file and follow the TODO.</p>
+  <form method="post" action="/report/{{ kind }}">
+  <label>What did you lose?</label>
+  <input type = "text" name = "title" required>
+  <label>Describe the item:</label>
+  <textarea name = "description"></textarea>
+  <p class="field-tip">Include details like the color, brand, size, or any unique features.</p>
+  <label>Choose a category:</label>
+  <select name = "category" required>
+    <option>Clothing</option>
+    <option>School Accessory(Backpack, pencil pouch, etc.)</option>
+    <option>Electronics</option>
+    <option>Waterbottle/Lunchbox</option>
+    <option>Other</option>
+  </select>
+  <label>What color is it?</label>
+  <input type = "text" name = "color">
+  <label>Where was it found/lost?</label>
+  <input type="text" name="location" {% if kind == "found" %}required{% endif %}>
+  <label>When did it happen?</label>
+  <input type="date" name="date_happened" required>
+  <label>What's your name?</label>
+  <input type = "text" name = "reporter_name">
+  <label>Enter your Contact Info:</label>
+  <input type = "text" name = "reporter_contact" required>
+  {% if kind == "lost" %}
+   <button type="submit" class="btn wide">Search for matches</button>
+  {% else %}
+   <button type="submit" class="btn wide">Turn it in</button>
+  {% endif %}
+  </form>   
 </div>
 
 {% endblock %}

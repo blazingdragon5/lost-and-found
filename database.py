@@ -38,13 +38,13 @@ import sqlite3
 
 DB_FILE = "items.db"
 
-
+#This code repeats itself a lot
 def get_connection():
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
     return conn
 
-
+#This creates the tables where items are stored when sent to the database
 def create_tables():
     conn = get_connection()
     cur = conn.cursor()
@@ -85,6 +85,7 @@ def create_tables():
 #  WEEK 1 — your first real code. Start here.
 # ==========================================================================
 
+#This adds an item to the database
 def add_item(item):
     conn = get_connection()
     cur = conn.cursor()
@@ -111,7 +112,7 @@ def add_item(item):
     conn.close()
     return new_id
 
-
+#This gets an item from the database based on the id
 def get_item(item_id):
     conn = get_connection()
     cur = conn.cursor()
@@ -123,6 +124,7 @@ def get_item(item_id):
     conn.close()
     return row
 
+#This deletes an item from the database based on the id
 def delete_item(item_id):
     conn = get_connection()
     cur = conn.cursor()
@@ -134,6 +136,7 @@ def delete_item(item_id):
     conn.close()
     return f"Item id: {item_id} deleted from database"
 
+#This gets every item in the database
 def get_all_items():
     conn = get_connection()
     cur = conn.cursor()
@@ -144,7 +147,7 @@ def get_all_items():
     conn.close()
     return rows
 
-
+#This gets every item based on if its a lost or found item
 def get_items_by_status(status):
     """Get all items that are "lost", or all that are "found".
 
