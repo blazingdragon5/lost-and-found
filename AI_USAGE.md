@@ -50,14 +50,11 @@ reads as confidence. A vague one reads as hiding something.
 
 ### Week 1 — Aug 24–30 — Database
 
-Understand how SQL INSERT, SELECT, and DELETE commands work.
-Understand SQL ? placeholders and why parameterized queries are safer.
-Understand how fetchone() and fetchall() return database rows.
-Learn how to test each database function.
+Week 1: AI explained how SQLite databases work, helped me understand SQL queries, dictionaries, and how to test my database functions. I wrote the database functions and testing code myself.
 
 ### Week 2 — Aug 31–Sep 6 — Forms
 
-- TODO
+Week 2: AI explained GET vs. POST requests, helped me understand how HTML form fields connect to Python, and helped me troubleshoot a database error involving a missing photo_filename key. I wrote the form and application code myself.
 
 ### Week 3 — Sep 7–13 — Browse and search
 

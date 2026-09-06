@@ -48,7 +48,7 @@ def startup():
 # ==========================================================================
 
 @app.get("/", response_class=HTMLResponse)
-def home(request: Request):
+def home123(request: Request):
     stats = {"reported": 0, "returned": 0, "waiting": 0}
     recent = database.get_all_items()[:4]
     return templates.TemplateResponse(
@@ -116,7 +116,6 @@ def report_found_form(request: Request):
 @app.post("/report/found")
 #This posts the data from the form
 def submit_found(
-
     title: str = Form(...),
     description: str = Form(...),
     category: str = Form(...),
@@ -153,20 +152,15 @@ def submit_found(
 
 @app.get("/browse", response_class=HTMLResponse)
 def browse(request: Request, q: str = "", status: str = "", category: str = ""):
-    """Show every item, with optional filters.
 
-    Those extra arguments (q, status, category) come from the web address:
-        /browse?q=blue&category=Water bottle
-    FastAPI pulls them out and hands them to you automatically. Nice, right?
-
-    The = "" part means "if it's not in the address, use an empty string."
-
-    TODO (Week 3):
-      items = database.search_items(q, status, category)
-      then return templates.TemplateResponse("browse.html", {...})
-    """
-    pass  # TODO: you write this
-
+    results = database.search_items(q,status,category)
+    return templates.TemplateResponse(
+    "browse.html",
+    {"request": request, "results": results, "q" : q , "status": status, "category": category},
+    )
+#This function uses the data from the filter bar in browse.html to send data to
+#search_items in database.py which fins the items in those filters and returns it to this function
+#Then, it uses that data to make item cards which will be displayed
 
 # ==========================================================================
 #  WEEK 4-5 — the match screen (your best screen)
@@ -176,12 +170,6 @@ def browse(request: Request, q: str = "", status: str = "", category: str = ""):
 def item_detail(request: Request, item_id: int):
     """Show one item, plus anything that might match it.
 
-    The {item_id} in the address is a wildcard. Visiting /item/7 means
-    item_id gets set to 7.
-
-    TODO (Week 3): get the one item with database.get_item(item_id).
-                   Show it. Stop there for now.
-
     TODO (Week 5): now add the matches.
       1. Figure out which pile to search. If this item is "lost", you want
          to compare it against all the "found" items. And vice versa.
@@ -189,7 +177,19 @@ def item_detail(request: Request, item_id: int):
       3. matches = matching.find_matches(item, candidates)
       4. Pass matches into the template.
     """
-    pass  # TODO: you write this
+
+    item = database.get_item(item_id)
+
+    if item is None:
+     return HTMLResponse("Item not found", status_code=404)
+    
+    return templates.TemplateResponse(
+        "item_detail.html",
+        {"request": request, "item":item}
+    )
+#This function gives a personal screen to every item when you click on it
+#You can click from the homepage, the browse page, or it opens when you fill out a form
+#In week 5, the screen will also show matching cards to click on
 
 
 @app.post("/item/{item_id}/claim")

@@ -173,40 +173,33 @@ def get_items_by_status(status):
 #  WEEK 3 — searching
 # ==========================================================================
 
+#This gets every item that satisfies the filters that are on
 def search_items(query="", status="", category=""):
-    """Find items matching whatever filters were filled in.
 
-    The tricky part: any of these three might be empty, and empty means
-    "don't filter on this." So you have to build the SQL up piece by piece.
+    conn = get_connection()
+    cur = conn.cursor()
 
-    Here's the pattern that makes it easy — copy this shape:
+    sql = "SELECT * FROM items WHERE 1=1"
+    params = []
 
-        sql = "SELECT * FROM items WHERE 1=1"
-        params = []
+    if query:
+       sql += " AND (title LIKE ? OR description LIKE ?)"
+       params.append("%" + query + "%")
+       params.append("%" + query + "%")
 
-        if query:
-            sql += " AND (title LIKE ? OR description LIKE ?)"
-            params.append("%" + query + "%")
-            params.append("%" + query + "%")
+    if status:
+       sql += " AND status = ?"
+       params.append(status)
 
-        if status:
-            sql += " AND status = ?"
-            params.append(status)
+    if category:
+       sql += " AND category = ?"
+       params.append(category)
 
-        ... same idea for category ...
+    cur.execute(sql, params)
+    results = cur.fetchall()
+    conn.close()
+    return results
 
-        cur.execute(sql, params)
-
-    Why "WHERE 1=1"? It's always true, so it changes nothing — but it means
-    every filter you bolt on can start with " AND " without you needing to
-    check whether it's the first one. Small trick, saves a lot of if-statements.
-
-    The % signs around the query are SQL's wildcards. "%blue%" means "has the
-    word blue anywhere in it."
-
-    TODO (Week 3): write it.
-    """
-    pass  # TODO: you write this
 
 
 # ==========================================================================

@@ -10,9 +10,8 @@
 
 {% block content %}
 
-{#
-  TODO (Week 3): show the item itself.
 
+ #This is the top half of the item_detail screen which shows all the info on the item
       <div class="detail">
         <div>
           <div class="photo-lg">📦</div>
@@ -23,11 +22,15 @@
           <p class="sub">{{ item.description }}</p>
           <div class="dl">
             <div><span>Category</span><span>{{ item.category }}</span></div>
-            ... more rows ...
+            <div><span>Color</span><span>{{ item.color }}</span></div>
+            <div><span>Location found/lost</span><span>{{ item.location }}</span></div>
+            <div><span>Date found/lost</span><span>{{ item.date_happened }}</span></div>
+            <div><span>Reported by:</span><span>{{ item.reporter_name }}</span></div>
+            <div><span>Contact Info</span><span>{{ item.reporter_contact }}</span></div>
           </div>
         </div>
       </div>
-#}
+
 
 {#
   TODO (Week 5): the match cards. This is the screen from your mockup.
