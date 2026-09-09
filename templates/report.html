@@ -28,6 +28,7 @@
   </select>
   <label>What color is it?</label>
   <input type = "text" name = "color">
+  <p class="field-tip">Please format colors with spaces like this: blue, red, orange</p>
   <label>Where was it found/lost?</label>
   <input type="text" name="location" {% if kind == "found" %}required{% endif %}>
   <label>When did it happen?</label>

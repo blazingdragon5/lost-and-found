@@ -173,7 +173,7 @@ def get_items_by_status(status):
 #  WEEK 3 — searching
 # ==========================================================================
 
-#This gets every item that satisfies the filters that are on
+#This gets every item that satisfies the filters that are currently on
 def search_items(query="", status="", category=""):
 
     conn = get_connection()

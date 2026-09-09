@@ -44,9 +44,8 @@
 <h2>Just turned in</h2>
 
 {#
-  This loop draws one card per item. Right now "recent" is an empty list,
-  so the {% else %} part runs instead. Once your database works, cards
-  will appear here automatically — you won't touch this file again.
+  This loop draws one card per item. It shows in the homepage under recent 
+       and shows the last 4 items reported to the database.
 #}
 {% if recent %}
   <div class="items">
@@ -63,8 +62,8 @@
   </div>
 {% else %}
   <div class="empty">
-    <p><strong>Nothing here yet.</strong></p>
-    <p>Once you build the report form in Week 2, items will show up here.</p>
+    <p><strong>Nothing here right now.</strong></p>
+    <p>Keep waiting for items to be reported.</p>
   </div>
 {% endif %}
 

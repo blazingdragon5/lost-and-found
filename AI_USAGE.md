@@ -58,7 +58,7 @@ Week 2: AI explained GET vs. POST requests, helped me understand how HTML form f
 
 ### Week 3 — Sep 7–13 — Browse and search
 
-- TODO
+Week 3: AI helped me understand how to build dynamic SQL queries for searching and filtering database items, connect the browse route to the database, and debug my item detail page. I wrote the actual code myself and used AI mainly to review my code and explain errors.
 
 ### Week 4 — Sep 14–20 — Matching engine
 
