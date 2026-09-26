@@ -159,7 +159,10 @@ def find_matches(item, candidates, minimum_score=25, limit=5):
     for candidate in candidates:
         if candidate["id"] == item["id"]:
             continue
-        result = score_match(item, candidate)
+        if item["status"] == "lost":
+            result = score_match(item, candidate)
+        else:
+            result = score_match(candidate, item)
         if result["score"]>=minimum_score:
             result["item"] = candidate
             results.append(result)

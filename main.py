@@ -1,31 +1,8 @@
-"""
-main.py — the front door of your app.
-
-Every web page lives here. When someone types an address in their browser,
-this file decides what they see.
-
-HOW A ROUTE WORKS
------------------
-    @app.get("/browse")
-    def browse_page(request):
-        return ...
-
-That @app.get("/browse") line says: "when someone visits /browse, run the
-function underneath me." The @ symbol is called a decorator. You don't have
-to understand how decorators work internally — just know it's how you glue a
-web address to a Python function.
-
-WHAT'S DONE, WHAT'S NOT
------------------------
-The home page works, so you can prove your setup is good (Week 0).
-Everything below it is a stub with a TODO. Those are yours.
-"""
-
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
+import matching
 import database
 
 app = FastAPI(title="School Lost and Found")
@@ -39,7 +16,6 @@ templates = Jinja2Templates(directory="templates")
 
 @app.on_event("startup")
 def startup():
-    """Runs one time when the server boots. Makes sure the database exists."""
     database.create_tables()
 
 
@@ -168,42 +144,49 @@ def browse(request: Request, q: str = "", status: str = "", category: str = ""):
 
 @app.get("/item/{item_id}", response_class=HTMLResponse)
 def item_detail(request: Request, item_id: int):
-    """Show one item, plus anything that might match it.
-
-    TODO (Week 5): now add the matches.
-      1. Figure out which pile to search. If this item is "lost", you want
-         to compare it against all the "found" items. And vice versa.
-      2. candidates = database.get_items_by_status(the_opposite_status)
-      3. matches = matching.find_matches(item, candidates)
-      4. Pass matches into the template.
-    """
-
+#
     item = database.get_item(item_id)
 
     if item is None:
      return HTMLResponse("Item not found", status_code=404)
-    
+    x = item["status"]
+    if x == "claimed":
+       results = None
+    else: 
+       pile = "found" if item["status"] == "lost" else "lost"
+       candidates = database.get_items_by_status(pile)
+       results = matching.find_matches(item, candidates)
     return templates.TemplateResponse(
         "item_detail.html",
-        {"request": request, "item":item}
+        {"request": request, "item":item, "results" : results}
     )
 #This function gives a personal screen to every item when you click on it
 #You can click from the homepage, the browse page, or it opens when you fill out a form
-#In week 5, the screen will also show matching cards to click on
+#It also passes a results variables with matches that will show on the item_detail html page
 
 
 @app.post("/item/{item_id}/claim")
-def claim_item(item_id: int, matched_with: int = Form(...)):
-    """Someone pressed "That's mine!" — mark both items as claimed.
-
-    TODO (Week 5):
-      Mark BOTH items claimed — the lost one and the found one. It's easy to
-      forget the second one, and then a returned item sits in your list
-      forever looking like it's still missing.
-      Then redirect to a confirmation page.
-    """
-    pass  # TODO: you write this
-
+def claim_item(request: Request, item_id: int, matched_with: int = Form(...)):
+    database.mark_claimed(item_id)
+    database.mark_claimed(matched_with)
+    item1 = database.get_item(item_id)
+    item2 = database.get_item(matched_with)
+    if item1["status"] == "lost":
+        itemv1 = item1
+        itemv2 = item2
+    else: 
+        itemv1 = item2
+        itemv2 = item1
+    match = matching.score_match(item1,item2)
+    pickup_code = "LF-" + str(item2["id"]).zfill(4)
+    database.save_match(item_id, matched_with,match["score"], match["reasons"])
+    return templates.TemplateResponse(
+        "claimed.html",
+        {"request": request, "item1": itemv1, "item2":itemv2, "code": pickup_code, "reporter": item2}
+    )
+#This function first changes the status of both items to claimed
+#Then it calculates the score and sends it to save_match function along with the ids
+#Then it shows the claimed.html page
 
 # ==========================================================================
 #  WEEK 6 — stats

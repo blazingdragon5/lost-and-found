@@ -62,11 +62,11 @@ Week 3: AI helped me understand how to build dynamic SQL queries for searching a
 
 ### Week 4 — Sep 14–20 — Matching engine
 
-- TODO
+AI helped me understand and debug the matching engine functions, including cleaning words, finding shared words and colors, checking dates, scoring matches, and finding the best matches. AI explained errors and helped me understand how the matching system should structure its results. I wrote the actual code myself and used AI mainly to review my code, explain errors, and guide me through the tests. I also tested the matching engine with realistic database items and changed the maximum points for shared description words because six meaningful shared words indicated a very strong match, making the original 40-point cap feel too low.
 
 ### Week 5 — Sep 21–27 — Match screen and claiming
 
-- TODO
+ AI helped me debug the claim flow, fix the layout of the matched item cards, and understand how to hide claimed items from Browse. I made the changes and tested the app myself.
 
 ### Week 6 — Sep 28–Oct 4 — Photos and stats
 

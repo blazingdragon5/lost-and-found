@@ -11,8 +11,8 @@
 {% block content %}
 
 
- #This is the top half of the item_detail screen which shows all the info on the item
-      <div class="detail">
+ <!--This is the top half of the item_detail screen which shows all the info on the item-->
+<div class="detail">
         <div>
           <div class="photo-lg">📦</div>
         </div>
@@ -29,13 +29,12 @@
             <div><span>Contact Info</span><span>{{ item.reporter_contact }}</span></div>
           </div>
         </div>
-      </div>
+</div>
 
 
-{#
-  TODO (Week 5): the match cards. This is the screen from your mockup.
-
-    {% for m in matches %}
+<!--This is the second half of the screen which shows potential matches and the that's mine button-->
+{% if results %}
+  {% for m in results %}
       <div class="match {% if m.score >= 80 %}top{% endif %}">
         <div class="ring {% if m.score >= 80 %}high{% elif m.score >= 50 %}mid{% endif %}">
           <span class="pct">{{ m.score }}%</span>
@@ -63,19 +62,9 @@
         </div>
       </div>
     {% endfor %}
-
-  I've written most of that out because the nested loop (matches, and then
-  reasons inside each match) is genuinely tricky the first time. Type it in
-  yourself rather than pasting — you'll actually remember how it works, and
-  you'll need to explain it in your video.
-
-  ⚠️ Don't forget the {% else %} case: what shows when there are NO matches?
-  A blank screen looks broken. Say something friendly like "Nothing matches
-  yet — we'll keep looking as new items come in."
-#}
-
-<div class="empty">
-  <p><strong>Not built yet.</strong> Item details are Week 3, matches are Week 5.</p>
-</div>
-
+{% else %} 
+  <div class = "empty">
+    <p>No matches yet, come back later!</p>
+  </div>
+{% endif %}
 {% endblock %}

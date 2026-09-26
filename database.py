@@ -179,17 +179,16 @@ def search_items(query="", status="", category=""):
     conn = get_connection()
     cur = conn.cursor()
 
-    sql = "SELECT * FROM items WHERE 1=1"
+    sql = "SELECT * FROM items WHERE 1=1 AND status != 'claimed'"
     params = []
 
     if query:
-       sql += " AND (title LIKE ? OR description LIKE ?)"
-       params.append("%" + query + "%")
+       sql += " AND (title LIKE ?)"
        params.append("%" + query + "%")
 
     if status:
-       sql += " AND status = ?"
-       params.append(status)
+     sql += " AND status = ?"
+     params.append(status)
 
     if category:
        sql += " AND category = ?"
@@ -206,26 +205,30 @@ def search_items(query="", status="", category=""):
 #  WEEK 5 — closing the loop
 # ==========================================================================
 
+
+#This function changes an item's status to claimed
 def mark_claimed(item_id):
-    """Change one item's status to "claimed".
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "UPDATE items SET status = ? WHERE id = ?",
+        ("claimed",item_id)
+    )
+    conn.commit()
+    conn.close()
 
-    TODO (Week 5):
-      UPDATE items SET status = ? WHERE id = ?
-      Don't forget conn.commit() — UPDATE changes data, so it needs saving.
-    """
-    pass  # TODO: you write this
 
-
+#This functions saves a confirmed match to be later used when calculating statistics
 def save_match(lost_id, found_id, score, reasons):
-    """Record that two items were matched up.
-
-    You don't strictly need this for the app to work — but it means you can
-    show "23 items returned" on your stats page, and that number is one of
-    the best things you'll have in your demo video. Worth it.
-
-    TODO (Week 5): INSERT into the matches table.
-    """
-    pass  # TODO: you write this
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+    "INSERT INTO matches (lost_item_id, found_item_id, score, reasons, confirmed) VALUES (?, ?, ?, ?, ?)",
+    (lost_id, found_id, score, str(reasons), 1)
+)
+    conn.commit()
+    conn.close()
+    
 
 
 # ==========================================================================

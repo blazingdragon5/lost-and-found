@@ -257,3 +257,27 @@ textarea { min-height: 88px; resize: vertical; }
   color: #fff; font-size: 46px; display: flex; align-items: center;
   justify-content: center; margin: 0 auto 22px;
 }
+
+
+
+.item-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+}
+
+.item-pair .item {
+    width: 250px;
+    flex: 0 0 250px;
+}
+
+.connection-line {
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #0cda5b;
+    flex: 0 0 60px;
+}

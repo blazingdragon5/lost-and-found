@@ -1,7 +1,6 @@
 # Credits
 
-Open-source libraries used in this project. The Challenge rules allow these,
-as long as you document them — which is what this file is for.
+
 
 | Library | What it does for me | License |
 |---|---|---|
@@ -16,5 +15,4 @@ as long as you document them — which is what this file is for.
 Everything else — the matching engine, the database code, the routes, and the
 HTML templates — I wrote myself. See `AI_USAGE.md` for where I got help.
 
-*Aditya: if you add a library later, add a row here the same day. It takes ten
-seconds then and it's a scavenger hunt in October.*
+
