@@ -1,38 +1,3 @@
-"""
-database.py — where your app remembers things.
-
-Right now, if you restart your server, everything is gone. A database fixes
-that. SQLite is a database that's just... a single file on your computer
-(items.db). No installing anything, no server. It's perfect for this.
-
-THE ONE THING TO UNDERSTAND
----------------------------
-Every time you talk to the database, it's the same four steps:
-
-    conn = get_connection()          # 1. open the file
-    cur = conn.cursor()              # 2. get something to type commands with
-    cur.execute("SQL GOES HERE")     # 3. run a command
-    conn.commit()                    # 4. save (only needed when CHANGING data)
-    conn.close()                     #    always close when you're done
-
-SQL is a second little language just for databases. You only need four words
-of it: SELECT (read), INSERT (add), UPDATE (change), DELETE (remove).
-
-⚠️ THE BIGGEST TRAP IN THIS WHOLE FILE
---------------------------------------
-When you put values into SQL, use ? placeholders. ALWAYS.
-
-    GOOD:  cur.execute("SELECT * FROM items WHERE id = ?", (item_id,))
-    BAD:   cur.execute("SELECT * FROM items WHERE id = " + str(item_id))
-
-The bad version lets someone type sneaky text into your form and wreck your
-whole database. It's called SQL injection, it's one of the most common security
-holes on the internet, and the ? fixes it completely. Free security — take it.
-
-⚠️ SECOND TRAP: a one-item tuple needs a comma. (item_id,) not (item_id).
-Python needs that comma to know it's a tuple. Forget it and you get a
-baffling error message.
-"""
 
 import sqlite3
 
@@ -81,9 +46,9 @@ def create_tables():
     conn.close()
 
 
-# ==========================================================================
-#  WEEK 1 — your first real code. Start here.
-# ==========================================================================
+#------------------------------------------|
+#       Basic Database Functions           |
+#------------------------------------------|
 
 #This adds an item to the database
 def add_item(item):
@@ -149,15 +114,6 @@ def get_all_items():
 
 #This gets every item based on if its a lost or found item
 def get_items_by_status(status):
-    """Get all items that are "lost", or all that are "found".
-
-    You'll lean on this hard in Week 5: to match a lost item, you grab
-    every found item and compare against them.
-
-    TODO (Week 1):
-      SELECT * FROM items WHERE status = ?
-    """
-    pass  # TODO: you write this
     conn=get_connection()
     cur = conn.cursor()
     cur.execute(
@@ -169,9 +125,25 @@ def get_items_by_status(status):
     return rows
 
 
-# ==========================================================================
-#  WEEK 3 — searching
-# ==========================================================================
+#------------------------------------------|
+#              Updating Photos             |
+#------------------------------------------|
+
+
+def update_photo_filename(item_id, filename):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "UPDATE items SET photo_filename = ? WHERE id = ?",
+        (filename, item_id)
+    )
+    conn.commit()
+    conn.close()
+#This function sets the filename to a specific id
+
+#------------------------------------------|
+#       Searching the Database             |
+#------------------------------------------|
 
 #This gets every item that satisfies the filters that are currently on
 def search_items(query="", status="", category=""):
@@ -201,9 +173,9 @@ def search_items(query="", status="", category=""):
 
 
 
-# ==========================================================================
-#  WEEK 5 — closing the loop
-# ==========================================================================
+#------------------------------------------|
+#       Updating Database After match       |
+#------------------------------------------|
 
 
 #This function changes an item's status to claimed
@@ -231,22 +203,35 @@ def save_match(lost_id, found_id, score, reasons):
     
 
 
-# ==========================================================================
-#  WEEK 6 — stats
-# ==========================================================================
+#------------------------------------------|
+#       Statistics from Database           |
+#------------------------------------------|
 
 def get_stats():
-    """Count things up for the stats page.
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM items")
+    total = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*) FROM items WHERE status = 'claimed'")
+    returned = cur.fetchone()[0]
+    waiting = total - returned
+    if total == 0:
+        return_rate = 0
+    else:
+        return_rate = returned/total * 100
+    return {"reported": total, "returned": returned, "waiting": waiting, "return_rate": return_rate}
+#This function counts up all the items in the database, how much are claimed, and how the rate of return for the items.
 
-    Return a dictionary like:
-        {"reported": 47, "returned": 23, "waiting": 6, "return_rate": 49}
 
-    TODO (Week 6):
-      SELECT COUNT(*) FROM items                          -> total
-      SELECT COUNT(*) FROM items WHERE status = 'claimed' -> returned
-      COUNT(*) gives back a row, so read it with row[0].
+def get_category_counts():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT category, COUNT(*) FROM items GROUP BY category")
+    rows = cur.fetchall()
+    conn.close()
 
-    ⚠️ Watch out for dividing by zero when you compute the percentage. On day
-    one you have 0 items, and 23/0 crashes your whole page. Check for zero first.
-    """
-    pass  # TODO: you write this
+    return [
+        {"name": row[0], "count": row[1]}
+        for row in rows
+    ]
+#This function counts up all the items for every category

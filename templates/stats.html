@@ -1,40 +1,57 @@
-{#
-  stats.html — the numbers page. WEEK 6.
-
-  Small file, big payoff: this is the screen that makes your demo video
-  convincing. "23 items returned" beats any feature list.
-#}
 {% extends "base.html" %}
 
 {% block content %}
 
-<h1>How it's going</h1>
-<p class="sub">Real numbers from real use.</p>
+<h1>Database Statistics</h1>
+<p class="sub">Amount of each category reported on this app</p>
 
-{#
-  TODO (Week 6a): three stat tiles.
-  Copy the .stat blocks from index.html — same shape, different numbers.
 
-  TODO (Week 6b): the bar charts.
 
-  You don't need a chart library for this. A bar is just a div with a
-  width percentage:
+<div class="bars">
+    {% for category in categories %}
+        <div class="bar-row">
+          <span>{{ category.name }}</span>
+            
+            <div class="bar-content">
+               <div class="track">
+                   <div class="fill" data-width="{{ (category.count * 100 / biggest_count) if biggest_count else 0 }}"></div>
+                </div>
+               <span class="v">{{ category.count }}</span>
+            </div>
 
-      <div class="bar-row">
-        <span>Water bottles</span>
-        <div class="track"><div class="fill" style="width: 100%"></div></div>
-        <span class="v">14</span>
+        </div>
+    {% endfor %}
       </div>
-
-  To get the percentage: (this_count / biggest_count) * 100. The biggest
-  category becomes 100% wide and everything else scales against it.
-
-  ⚠️ Divide-by-zero again. If you have no items at all, biggest_count is 0
-  and your page crashes. Check for it.
-#}
-
-<div class="empty">
-  <p><strong>Not built yet.</strong> That's Week 6.</p>
+<p><br><br></p>
+<hr>
+<p><br><br></p>
+<div class="grid3" style="margin-bottom:26px">
+  <div class="stat">
+    <div class="n">{{ stats.reported }}</div>
+    <div class="l">Items reported</div>
+  </div>
+  <div class="stat">
+    <div class="n">{{ stats.returned }}</div>
+    <div class="l">Back with their owner</div>
+  </div>
+  <div class="stat">
+    <div class="n">{{ stats.waiting }}</div>
+    <div class="l">Waiting to be claimed</div>
+  </div>
 </div>
+
+<div class = "grid6" style = "margin-bottom: 26px">
+  <div class = "stat">
+    <div class="n">{{ "%.2f"|format(stats.return_rate)}}%</div>
+    <div class="l">Total Return Rate</div>
+  </div>
+</div>
+
+<script>
+    document.querySelectorAll('.fill').forEach((bar) => {
+        const width = Number(bar.dataset.width || 0);
+        bar.style.width = `${width}%`;
+    });
+</script>
 
 {% endblock %}

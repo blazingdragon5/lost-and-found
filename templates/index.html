@@ -1,15 +1,4 @@
-{#
-  index.html — your home page. This one WORKS. It's your Week 0 finish line.
 
-  Read how it fits together:
-    - "extends base.html" means wrap me in the nav bar and the styling
-    - the {% block content %} part gets dropped into the hole in base.html
-    - {{ stats.reported }} prints a value that main.py handed over
-
-  Once your server is running, go to http://127.0.0.1:8000 and you should
-  see this page. The numbers will all be 0 because your database is empty.
-  That's right, not broken.
-#}
 {% extends "base.html" %}
 
 {% block title %}Lost &amp; Found — Home{% endblock %}
@@ -43,15 +32,18 @@
 
 <h2>Just turned in</h2>
 
-{#
-  This loop draws one card per item. It shows in the homepage under recent 
-       and shows the last 4 items reported to the database.
-#}
+
 {% if recent %}
   <div class="items">
     {% for item in recent %}
       <a href="/item/{{ item.id }}" class="item">
-        <div class="thumb">📦</div>
+        <div class="thumb" >
+          {% if item.photo_filename %}
+             <img class = "item-photo" src="/static/uploads/{{ item.photo_filename }}">
+          {% else %}
+            📦
+          {% endif %}
+        </div>
         <div class="item-body">
           <span class="pill {{ item.status }}">{{ item.status }}</span>
           <h4>{{ item.title }}</h4>

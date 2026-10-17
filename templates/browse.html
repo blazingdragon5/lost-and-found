@@ -40,7 +40,13 @@
   <div class="items">
     {% for item in results %}
       <a href="/item/{{ item.id }}" class="item">
-        <div class="thumb">📦</div>
+        <div class="thumb" >
+          {% if item.photo_filename %}
+             <img class = "item-photo" src="/static/uploads/{{ item.photo_filename }}">
+          {% else %}
+             📦
+          {% endif %}
+        </div>
         <div class="item-body">
           <span class="pill {{ item.status }}">{{ item.status }}</span>
           <h4>{{ item.title }}</h4>

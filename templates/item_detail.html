@@ -14,7 +14,13 @@
  <!--This is the top half of the item_detail screen which shows all the info on the item-->
 <div class="detail">
         <div>
-          <div class="photo-lg">📦</div>
+          <div class="photo-lg">
+            {% if item.photo_filename %}
+             <img class = "item-photo" src="/static/uploads/{{ item.photo_filename }}">
+            {% else %}
+            📦
+          {% endif %}
+          </div>
         </div>
         <div>
           <span class="pill {{ item.status }}">{{ item.status }}</span>

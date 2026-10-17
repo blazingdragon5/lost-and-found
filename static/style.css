@@ -1,16 +1,3 @@
-/* ==========================================================================
-   style.css — this one's a gift. It's already done.
-
-   Aditya: you're not being judged on CSS, and staring at ugly gray text for
-   ten weeks is no fun. So this is written for you and it makes your app look
-   like the mockup.
-
-   WANT TO CHANGE THE COLORS? Everything is in the block right below. Change
-   --primary to a different color code, save, refresh your browser. That's it.
-   The whole site updates. Try it right now — it's a satisfying two seconds.
-
-   Grab color codes from htmlcolorcodes.com if you want to experiment.
-   ========================================================================== */
 
 :root {
   --bg: #f1f5f9;
@@ -104,6 +91,7 @@ h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
 }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid6 { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%;}
 @media (max-width: 760px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
 
 /* ---------- forms ---------- */
@@ -130,9 +118,15 @@ textarea { min-height: 88px; resize: vertical; }
 
 /* ---------- stat tiles ---------- */
 .stat {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px;
+  background: var(--surface); 
+  border: 1px solid var(--border);
+  border-radius: var(--radius); 
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
 }
+
+
 .stat .n { font-size: 32px; font-weight: 800; letter-spacing: -1px; color: var(--primary); }
 .stat .l { font-size: 13px; color: var(--muted); font-weight: 600; margin-top: 2px; }
 
@@ -168,7 +162,7 @@ textarea { min-height: 88px; resize: vertical; }
 .filters input, .filters select { margin-bottom: 0; }
 @media (max-width: 760px) { .filters { grid-template-columns: 1fr; } }
 
-/* ---------- MATCH CARDS (your best screen) ---------- */
+/* ---------- MATCH CARDS ---------- */
 .match {
   background: var(--surface); border: 2px solid var(--border);
   border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
@@ -228,15 +222,58 @@ textarea { min-height: 88px; resize: vertical; }
   margin-bottom: 16px; background: var(--surface-2);
 }
 
-/* ---------- stats bars ---------- */
-.bars { display: flex; flex-direction: column; gap: 12px; }
-.bar-row {
-  display: grid; grid-template-columns: 92px 1fr 44px; gap: 12px;
-  align-items: center; font-size: 13px;
+/* ---------- photos ---------- */
+.item-photo {
+    max-width: 100%;
+    max-height: 130px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
-.track { background: var(--surface-2); border-radius: 999px; height: 22px; overflow: hidden; }
-.fill { height: 100%; border-radius: 999px; background: var(--primary); }
-.bar-row .v { font-weight: 700; text-align: right; }
+
+/* ---------- stats bars ---------- */
+.bars {
+  display: flex;
+  flex-direction:column;
+  gap: 24px;
+  }
+
+.bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.bar-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bar-content .track {
+    flex: 1;
+}
+
+.track {
+  background: var(--surface-2); 
+  border-radius: 999px; 
+  height: 22px; 
+  overflow: hidden; 
+  width: 100%;
+}
+
+.fill {
+  height: 100%; 
+  border-radius: 999px; 
+  background: var(--primary); 
+}
+
+.bar-row .v { 
+  font-weight: 700; 
+  text-align: right; 
+  font-size: 13px;
+}
 
 /* ---------- misc ---------- */
 .note {
@@ -281,3 +318,4 @@ textarea { min-height: 88px; resize: vertical; }
     background: #0cda5b;
     flex: 0 0 60px;
 }
+

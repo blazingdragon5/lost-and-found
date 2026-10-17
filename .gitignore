@@ -1,14 +1,4 @@
-# Things Git should ignore.
-#
-# Aditya: this file keeps junk out of your GitHub repo. Two of these matter
-# a lot:
-#
-#   venv/     — thousands of library files. They'd bloat your repo and anyone
-#               can recreate them from requirements.txt in 30 seconds.
-#   items.db  — your actual database. Keeping it out means you don't publish
-#               real people's names and contact info to the public internet.
-#               That's a privacy thing, and it's the kind of judgment call
-#               worth mentioning in your submission write-up.
+
 
 venv/
 __pycache__/
@@ -22,5 +12,5 @@ static/uploads/*
 
 .vscode/
 .DS_Store
-Thumbs.db
+
 scratch.py

@@ -11,7 +11,7 @@
 
 
 <div class="card">
-  <form method="post" action="/report/{{ kind }}">
+  <form method="post" action="/report/{{ kind }}" enctype="multipart/form-data">
   <label>What did you lose/find?</label>
   <input type = "text" name = "title" required>
   <label>Describe the item:</label>
@@ -37,6 +37,8 @@
   <input type = "text" name = "reporter_name">
   <label>Enter your Contact Info:</label>
   <input type = "text" name = "reporter_contact" required>
+  <label>Insert an Image</label>
+  <input type="file" name="photo" accept="image/*">
   {% if kind == "lost" %}
    <button type="submit" class="btn wide">Search for matches</button>
   {% else %}

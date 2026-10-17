@@ -2,14 +2,11 @@
 
 A web app that helps students get their lost stuff back. When you report
 something you lost, it searches everything that's been turned in and shows you
-the closest matches — and explains why it thinks they match.
+the closest matches — and explains why it thinks they match. It then proceeds 
+to show the contact information from the reporter along with a pickup code so 
+you can get your item back quickly and safely.
 
 Built for the 2026 Congressional App Challenge.
-
-**Aditya — this file is your submission's front door.** Judges and anyone
-visiting your GitHub read it first. Right now it's a skeleton with TODOs. Fill
-it in during Week 8, once you know what you actually built.
-
 ---
 
 ## The problem
@@ -62,15 +59,17 @@ pytest
 
 ## What I learned
 
-TODO (Week 8): The hardest bug you fixed and how you figured it out. What you'd
-do differently. This is a question on the submission form too, so writing it
-here means it's already done.
+One of the hardest bugs I 
 
 ## What's next
 
-TODO (Week 8): Image matching, notifications, school accounts, an iPhone app.
-Having a real roadmap shows you're thinking past the deadline.
+Of course, my app isn't finished yet I still have many more things to do, 
+this is my future roadmap about what features I can add next:
+
+- 
+-
+-
 
 ---
 
-Built by Aditya S. · 2026 Congressional App Challenge
+Built by Aditya Sawant · 2026 Congressional App Challenge

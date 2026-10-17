@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, File, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import matching
 import database
+from PIL import Image
+
 
 app = FastAPI(title="School Lost and Found")
 
@@ -19,13 +21,14 @@ def startup():
     database.create_tables()
 
 
-# ==========================================================================
-#  WEEK 0 — this one already works. Start your server and go look at it.
-# ==========================================================================
+#------------------------------------------|
+#               Homepage                   |
+#------------------------------------------|
 
 @app.get("/", response_class=HTMLResponse)
-def home123(request: Request):
-    stats = {"reported": 0, "returned": 0, "waiting": 0}
+def home(request: Request):
+    results = database.get_stats()
+    stats = {"reported": results["reported"], "returned": results["returned"], "waiting": results["waiting"]}
     recent = database.get_all_items()[:4]
     return templates.TemplateResponse(
         "index.html",
@@ -33,9 +36,9 @@ def home123(request: Request):
     )
 
 
-# ==========================================================================
-#  WEEK 2 — reporting items
-# ==========================================================================
+#------------------------------------------|
+#       Reporting and Saving Items         |
+#------------------------------------------|
 
 @app.get("/report/lost", response_class=HTMLResponse)
 #This code displays the form for the user
@@ -45,8 +48,6 @@ def report_lost_form(request: Request):
     {"request": request, "kind": "lost"},
 )
 #This code opens the report_lost_item form 
-    
-
 
 @app.post("/report/lost")
 #This posts the data from the form app 
@@ -59,21 +60,37 @@ def submit_lost(
     date_happened: str = Form(...),
     reporter_name: str = Form(...),
     reporter_contact: str = Form(...),
-    #This takes the data from the form and saves it in these variables
+    photo: UploadFile = File(None)
 ):
     item = {
-    "status": "lost",
-    "title": title,
-    "description": description,
-    "category": category,
-    "color": color,
-    "location": location,
-    "date_happened": date_happened,
-    "reporter_name": reporter_name,
-    "reporter_contact": reporter_contact,
-    "photo_filename": None,
+        "status": "lost",
+        "title": title,
+        "description": description,
+        "category": category,
+        "color": color,
+        "location": location,
+        "date_happened": date_happened,
+        "reporter_name": reporter_name,
+        "reporter_contact": reporter_contact,
+        "photo_filename": None,
     }
+
     new_id = database.add_item(item)
+    #This code processes the photo
+    if photo and photo.filename:
+        extension = photo.filename.rsplit(".", 1)[-1].lower()
+
+        if extension not in ["jpg", "jpeg", "png"]:
+            return {"error": "Please upload a JPG or PNG image."}
+
+        filename = f"item_{new_id}.jpg"
+
+        img = Image.open(photo.file)
+        img.thumbnail((800,800))
+        img.save("static/uploads/" + filename)
+
+        database.update_photo_filename(new_id, filename)
+
     return RedirectResponse(f"/item/{new_id}", status_code=303)
 #This function takes the data from the form and saves it in a new dictionary called item.
 #Then it sends the item to the database and gets back the id.
@@ -89,8 +106,8 @@ def report_found_form(request: Request):
 #This code opens the report_found_form
 
 
+#This posts the data from the form app 
 @app.post("/report/found")
-#This posts the data from the form
 def submit_found(
     title: str = Form(...),
     description: str = Form(...),
@@ -100,9 +117,9 @@ def submit_found(
     date_happened: str = Form(...),
     reporter_name: str = Form(...),
     reporter_contact: str = Form(...),
-    #This saves the data from the submit_found form in variables
+    photo: UploadFile = File(None)
 ):
-     item = {
+    item = {
         "status": "found",
         "title": title,
         "description": description,
@@ -113,18 +130,35 @@ def submit_found(
         "reporter_name": reporter_name,
         "reporter_contact": reporter_contact,
         "photo_filename": None,
-        }
-     new_id = database.add_item(item)
-     return RedirectResponse(f"/item/{new_id}", status_code=303)
+    }
+
+    new_id = database.add_item(item)
+
+    #This code processes the photo
+    if photo and photo.filename:
+        extension = photo.filename.rsplit(".", 1)[-1].lower()
+
+        if extension not in ["jpg", "jpeg", "png"]:
+            return {"error": "Please upload a JPG or PNG image."}
+
+        filename = f"item_{new_id}.jpg"
+
+        img = Image.open(photo.file)
+        img.thumbnail((800,800))
+        img.save("static/uploads/" + filename)
+
+        database.update_photo_filename(new_id, filename)
+
+    return RedirectResponse(f"/item/{new_id}", status_code=303)
    
    # TODO (Week 6): add photo upload. Come back to this later — don't try
     #to do photos and forms at the same time.
 #This function takes the data from the found form and enters it into the database.
 
 
-# ==========================================================================
-#  WEEK 3 — browsing and searching
-# ==========================================================================
+#------------------------------------------|
+#              Finding Items               |
+#------------------------------------------|
 
 @app.get("/browse", response_class=HTMLResponse)
 def browse(request: Request, q: str = "", status: str = "", category: str = ""):
@@ -138,9 +172,9 @@ def browse(request: Request, q: str = "", status: str = "", category: str = ""):
 #search_items in database.py which fins the items in those filters and returns it to this function
 #Then, it uses that data to make item cards which will be displayed
 
-# ==========================================================================
-#  WEEK 4-5 — the match screen (your best screen)
-# ==========================================================================
+#------------------------------------------|
+#       Matching and Item Screens          |
+#------------------------------------------|
 
 @app.get("/item/{item_id}", response_class=HTMLResponse)
 def item_detail(request: Request, item_id: int):
@@ -188,16 +222,27 @@ def claim_item(request: Request, item_id: int, matched_with: int = Form(...)):
 #Then it calculates the score and sends it to save_match function along with the ids
 #Then it shows the claimed.html page
 
-# ==========================================================================
-#  WEEK 6 — stats
-# ==========================================================================
+#------------------------------------------|
+#           Statistics of the App          |
+#------------------------------------------|
 
 @app.get("/stats", response_class=HTMLResponse)
 def stats_page(request: Request):
-    """The numbers page. This one goes in your demo video.
+    stats = database.get_stats()
 
-    TODO (Week 6):
-      Get the counts from database.get_stats() and render stats.html.
-      Judges love real numbers, so make this page count.
-    """
-    pass  # TODO: you write this
+    categories = database.get_category_counts()
+    biggest_count = max(
+        (category["count"] for category in categories),
+        default=0
+    )
+    biggest_count += 0.5 
+
+    return templates.TemplateResponse(
+        "stats.html",
+        {"request": request,
+          "stats": stats,
+          "categories": categories,
+          "biggest_count":biggest_count
+          })
+#This function first calls the get_stats function and saves the dictionary of values in a variable "stats"
+#Then it sends the dictionary from this variable to stats.html and shows that page

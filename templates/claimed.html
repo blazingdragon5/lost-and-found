@@ -12,7 +12,13 @@
   <div class="item-pair">
 
     <div class="item">
-        <div class="thumb">📦</div>
+        <div class="thumb" >
+          {% if item1.photo_filename %}
+             <img class = "item-photo" src="/static/uploads/{{ item1.photo_filename }}">
+          {% else %}
+            📦
+          {% endif %}
+        </div>
         <div class="item-body">
           <span class="pill {{ item1.status }}">{{ item1.status }}</span>
           <h4>{{ item1.title }}</h4>
@@ -21,7 +27,13 @@
     </div>
     <div class="connection-line"></div>
     <div class="item">
-        <div class="thumb">📦</div>
+        <div class="thumb" >
+          {% if item2.photo_filename %}
+             <img class = "item-photo" src="/static/uploads/{{ item2.photo_filename }}">
+          {% else %}
+            📦
+          {% endif %}
+        </div>
         <div class="item-body">
           <span class="pill {{ item2.status }}">{{ item2.status }}</span>
           <h4>{{ item2.title }}</h4>

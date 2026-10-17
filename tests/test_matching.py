@@ -1,26 +1,3 @@
-"""
-test_matching.py — your answer key.
-
-These tests describe exactly what your matching code has to do. I wrote them
-for you on purpose: they turn a vague goal ("make matching work") into a
-checklist that tells you the second you're right.
-
-RUN THEM:
-    pytest                    -> everything
-    pytest -k clean_words     -> just the clean_words ones
-    pytest -v                 -> show every test by name
-
-RIGHT NOW EVERY ONE OF THESE FAILS. That is correct and expected. Your job
-over Weeks 4-5 is to turn them green one at a time.
-
-Work top to bottom. The tests are in the same order as the functions in
-matching.py, and each one builds on the last.
-
-A word on what you're doing here: writing code against tests that already
-exist is called test-driven development, and a lot of professional software
-gets built exactly this way. You're not doing a school exercise version of
-it — this is the real thing.
-"""
 
 import sys
 import os

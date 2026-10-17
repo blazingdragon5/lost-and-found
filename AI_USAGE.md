@@ -1,76 +1,52 @@
-# AI Usage Log
-
-**Aditya: fill this in every single week. Two minutes, and it saves you from
-scrambling in October.**
-
-The Congressional App Challenge rules say AI can help with parts of a project
-but can't build the whole thing, and that any AI use has to be disclosed. When
-you submit, you'll be asked about this. If you've kept this log, you paste it
-in and you're done. If you haven't, you'll be trying to remember what happened
-in September while a deadline clock is running.
-
-Be specific and be honest. "Claude explained how X works, I wrote the code" is
-a great answer. Judges have read a lot of submissions — a real, detailed log
-reads as confidence. A vague one reads as hiding something.
-
----
-
-## What counts as worth logging
-
-- Something explained to you (a concept, an error message, how a library works)
-- Help finding a bug
-- Structure or starter files you were given
-- Code you were shown — **especially** this one. Say what it was and whether
-  you typed it yourself or used it as-is.
-
-## What doesn't need logging
-
-- Looking things up in the official Python or FastAPI docs
-- Googling an error and reading Stack Overflow
-- Asking a human for help (but that's worth mentioning in your write-up anyway)
-
----
-
 ## The log
 
-### Week 0 — Aug 15–23 — Setup
+###  Setup
 
 - Claude created the starter folder for this project: the file structure, empty
   function stubs with comments explaining what each one should do, the CSS
   stylesheet, and the test file. I wrote the actual code inside the functions.
-- Claude wrote `static/style.css` completely. I did not write the CSS. I chose
-  the colors and changed [TODO: write what you changed].
+
+
+- Claude wrote most of `static/style.css`. I made many iterations based on 
+what I needed, for example, I added many new rule sets to customize the stats
+ page and the claimed page to make them look visually appealing. I also chose 
+ the primary colors for the website.
+
+
 - Claude wrote `tests/test_matching.py` completely, to give me a target to build
   against. I did not write the tests. I wrote all the code that makes them pass.
-- Claude wrote the working parts of `main.py` (the home page route) and
-  `database.py` (`create_tables`) as examples for me to learn the pattern from.
 
-  AI helped me troubleshoot Python/Pillow compatibility with Python 3.14, understand Git setup errors, and understand how to connect VS Code with GitHub.
-  AI explained the setup steps and Git commands when I got stuck; I completed the setup and wrote the project code myself.
+- Claude wrote the homepage route in `main.py` and the
+  `create_tables` function in `database.py` as examples for me 
+  to learn the pattern from.
 
-### Week 1 — Aug 24–30 — Database
+  AI helped me troubleshoot Python/Pillow compatibility with Python 3.14, understand Git setup errors, 
+  and understand how to connect VS Code with GitHub.
 
-Week 1: AI explained how SQLite databases work, helped me understand SQL queries, dictionaries, and how to test my database functions. I wrote the database functions and testing code myself.
 
-### Week 2 — Aug 31–Sep 6 — Forms
+### Database
 
-Week 2: AI explained GET vs. POST requests, helped me understand how HTML form fields connect to Python, and helped me troubleshoot a database error involving a missing photo_filename key. I wrote the form and application code myself.
+AI explained how SQLite databases work, helped me understand SQL queries, dictionaries, and how to test my database functions. I wrote the database functions and testing code myself.
 
-### Week 3 — Sep 7–13 — Browse and search
+### Forms
 
-Week 3: AI helped me understand how to build dynamic SQL queries for searching and filtering database items, connect the browse route to the database, and debug my item detail page. I wrote the actual code myself and used AI mainly to review my code and explain errors.
+AI explained GET vs. POST requests, helped me understand how HTML form fields connect to Python, and helped me troubleshoot a database error involving a missing photo_filename key. I wrote the form and application code myself.
 
-### Week 4 — Sep 14–20 — Matching engine
+### Browse and search
 
-AI helped me understand and debug the matching engine functions, including cleaning words, finding shared words and colors, checking dates, scoring matches, and finding the best matches. AI explained errors and helped me understand how the matching system should structure its results. I wrote the actual code myself and used AI mainly to review my code, explain errors, and guide me through the tests. I also tested the matching engine with realistic database items and changed the maximum points for shared description words because six meaningful shared words indicated a very strong match, making the original 40-point cap feel too low.
+AI helped me understand how to build dynamic SQL queries for searching and filtering database items, connect the browse route to the database, and debug my item detail page. I wrote the actual code myself and used AI mainly to review my code and explain errors.
 
-### Week 5 — Sep 21–27 — Match screen and claiming
+### Matching engine
+
+AI helped me understand and debug the matching engine functions, including cleaning words, finding shared words and colors, checking dates, scoring matches, and finding the best matches. AI explained errors and helped me understand how the matching system should structure its results. I wrote the actual code myself and used AI mainly to review my code, explain errors, and guide me through the tests. I also tested the matching engine with realistic database items and changed the maximum points for shared description words because six meaningful shared words indicated a very strong match, making the original 25-point cap feel too low.
+
+### Match screen and claiming
 
  AI helped me debug the claim flow, fix the layout of the matched item cards, and understand how to hide claimed items from Browse. I made the changes and tested the app myself.
 
-### Week 6 — Sep 28–Oct 4 — Photos and stats
+### Photos and stats
 
-- TODO
+For adding photos and the stat page, I used ChatGPT to help implement and troubleshoot image resizing for uploaded lost and found items. Although the image sizing issue was not completely resolved, I decided the appearance was acceptable and moved on. I made the code changes and tested the results myself.
 
 ### Week 7 — Oct 5–11 — User testing
 
