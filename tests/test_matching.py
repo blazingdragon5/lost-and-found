@@ -9,7 +9,7 @@ import matching
 
 
 # =====================================================================
-#  clean_words()  — get these passing first
+#  clean_words()  
 # =====================================================================
 
 def test_clean_words_lowercases():

@@ -196,6 +196,10 @@ textarea { min-height: 88px; resize: vertical; }
   cursor: pointer; font-family: inherit; border: 0; white-space: nowrap;
 }
 .mini.yes { background: var(--good); color: #fff; }
+
+a.mini.yes {
+  text-decoration: none;
+}
 .mini.no { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 
 /* ---------- detail page ---------- */
@@ -230,6 +234,8 @@ textarea { min-height: 88px; resize: vertical; }
     height: auto;
     object-fit: contain;
 }
+
+
 
 /* ---------- stats bars ---------- */
 .bars {

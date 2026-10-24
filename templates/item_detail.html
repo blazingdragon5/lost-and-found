@@ -65,6 +65,9 @@
             <input type="hidden" name="matched_with" value="{{ m.item.id }}">
             <button class="mini yes">That's mine!</button>
           </form>
+          <a href="/item/{{ m.item.id }}" class="mini yes">
+             View Item Details
+          </a>
         </div>
       </div>
     {% endfor %}
