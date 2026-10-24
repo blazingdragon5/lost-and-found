@@ -59,7 +59,7 @@ pytest
 
 ## What I learned
 
-
+From participating in The Congressional App Challenge. I learned many skills, most were related to coding, but I even learned some life skills along the way. Regarding the technical aspects, I learned how to use SQL when making my database functions, how to use variables in html, how to send users to different html pages, and many more skills that I used to make my app. However, more importantly, I learnt the value of persistence and the value of never giving up. There were multiple times during developing the app where I felt that things were just not working as I expected them to and I kept facing one obstacle after another. However, I kept working on them, trying different methods and techniques to overcome them and the feeling of accomplishment, satisfaction and happiness to see things working was something I will always remember. Whether it was more technical, or just a life lesson in general, the experience of competing in the Congressional App Challenge has provided me with tools that I will use throughout my life.
 
 
 ## Roadmap / Future Improvements
